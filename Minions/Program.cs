@@ -12,7 +12,7 @@ namespace Minions
 
 		static void Main(string[] args)
 		{
-			SelectVillains();
+			//SelectVillains();
 			//InputData_3();
 			//InputData_4();
 			//InputData_5();
@@ -83,7 +83,7 @@ namespace Minions
 		static void SelectVillains()
 		{
 			string selectionCommandString = $"SELECT Name, COUNT(*) AS Count " +
-			$"FROM MinionsVillains AS MV JOIN Villains AS V ON V.Id = MV.VillianId " +
+			$"FROM MinionsVillains AS MV JOIN Villains AS V ON V.Id = MV.VillainId " +
 			$"GROUP BY Name " +
 			$"HAVING COUNT(*) >= 3" +
 			$"ORDER BY COUNT(*) DESC";
@@ -115,7 +115,7 @@ namespace Minions
 		{
 			string selectNameVallains = $"SELECT Name FROM Villains WHERE Villains.Id = @id";
 			string selectionCommandString = $"SELECT Name, Age FROM MinionsVillains " +
-				$"JOIN Minions ON Minions.Id = MinionsVillains.MinionId WHERE MinionsVillains.VillianId = @id " +
+				$"JOIN Minions ON Minions.Id = MinionsVillains.MinionId WHERE MinionsVillains.VillainId = @id " +
 				$"GROUP BY Name, Age ORDER BY Name";
 
 			SqlConnection connection = new SqlConnection(connectionString);
@@ -248,11 +248,11 @@ namespace Minions
 				{
 					SqlCommand insertMinionVillains = new SqlCommand(
 					$"INSERT INTO MinionsVillains " +
-					$"(MinionId, VillianId) VALUES " +
-					$"((SELECT Id FROM Minions WHERE Name = @minionName), (SELECT Id FROM Villains WHERE Name = @villianName))", connection);
+					$"(MinionId, VillainId) VALUES " +
+					$"((SELECT Id FROM Minions WHERE Name = @minionName), (SELECT Id FROM Villains WHERE Name = @villainName))", connection);
 
 					insertMinionVillains.Parameters.AddWithValue("@minionName", nameMinion);
-					insertMinionVillains.Parameters.AddWithValue("@villianName", nameVillain);
+					insertMinionVillains.Parameters.AddWithValue("@villainName", nameVillain);
 
 					insertMinionVillains.ExecuteNonQuery();
 
@@ -270,7 +270,7 @@ namespace Minions
 			SqlConnection connection = new SqlConnection(connectionString);
 
 			string checkVillain = $"SELECT Name FROM Villains WHERE Id = @id";
-			string countMinions = $"SELECT COUNT(*) AS Count FROM MinionsVillains WHERE VillianId = @id";
+			string countMinions = $"SELECT COUNT(*) AS Count FROM MinionsVillains WHERE VillainId = @id";
 
 			SqlCommand commandCheckVillain = new SqlCommand(checkVillain, connection);
 			SqlCommand commandCountMinions = new SqlCommand(countMinions, connection);
@@ -296,7 +296,7 @@ namespace Minions
 						try
 						{
 							SqlCommand deleteVillains = new SqlCommand(
-							$"DELETE FROM MinionsVillains WHERE VillianId = @id", connection);
+							$"DELETE FROM MinionsVillains WHERE VillainId = @id", connection);
 
 							deleteVillains.Parameters.AddWithValue("@id", id);
 
